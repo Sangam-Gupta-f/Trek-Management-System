@@ -1,0 +1,31 @@
+# Ignore node_modules
+/node_modules
+
+# Ignore log files
+*.log
+
+# Ignore OS files
+.DS_Store
+Desktop.ini
+Thumbs.db
+ehthumbs.db
+Thumbs.tdb
+
+# Ignore vim temporary files
+*.swp
+*.swo
+*.vim
+
+# Ignore cache files
+.cache
+
+
+.env
+
+# Ignore build output
+/dist
+/build
+
+# Ignore coverage reports
+/coverage
+/.env   

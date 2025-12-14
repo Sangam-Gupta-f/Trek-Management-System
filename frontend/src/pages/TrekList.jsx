@@ -21,7 +21,7 @@ export default function TrekList() {
     try {
       setLoading(true);
       const response = await axios.get(
-        `http://localhost:5000/treks?page=${currentPage}`
+        `${import.meta.env.VITE_BACKEND_URL}/treks?page=${currentPage}`
       );
       setTreks(response.data.treks);
       setTotalPages(response.data.totalPages);
@@ -36,7 +36,7 @@ export default function TrekList() {
     if (!window.confirm("Are you sure you want to delete this trek?")) return;
 
     try {
-      await axios.delete(`http://localhost:5000/treks/${id}`, {
+      await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/treks/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       fetchTreks();

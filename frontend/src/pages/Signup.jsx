@@ -1,39 +1,42 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
-import { useAuth } from "../contexts/AuthContext"
-import axios from "axios"
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
+import axios from "axios";
 
 export default function Signup() {
-  const [name, setName] = useState("")
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [error, setError] = useState("")
-  const [loading, setLoading] = useState(false)
-  const { login } = useAuth()
-  const navigate = useNavigate()
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const { login } = useAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    setError("")
-    setLoading(true)
+    e.preventDefault();
+    setError("");
+    setLoading(true);
 
     try {
-      const response = await axios.post("http://localhost:5000/auth/signup", {
-        name,
-        email,
-        password,
-      })
+      const response = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/auth/signup`,
+        {
+          name,
+          email,
+          password,
+        }
+      );
 
-      login(response.data.token, response.data.user)
-      navigate("/treks")
+      login(response.data.token, response.data.user);
+      navigate("/treks");
     } catch (err) {
-      setError(err.response?.data?.error || "Signup failed")
+      setError(err.response?.data?.error || "Signup failed");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <div className="auth-container">
@@ -46,7 +49,13 @@ export default function Signup() {
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label className="form-label">Name</label>
-            <input type="text" className="form-input" value={name} onChange={(e) => setName(e.target.value)} required />
+            <input
+              type="text"
+              className="form-input"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
           </div>
 
           <div className="form-group">
@@ -85,5 +94,5 @@ export default function Signup() {
         </p>
       </div>
     </div>
-  )
+  );
 }

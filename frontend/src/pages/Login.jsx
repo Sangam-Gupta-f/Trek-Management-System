@@ -1,37 +1,40 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
-import { useAuth } from "../contexts/AuthContext"
-import axios from "axios"
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
+import axios from "axios";
 
 export default function Login() {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [error, setError] = useState("")
-  const [loading, setLoading] = useState(false)
-  const { login } = useAuth()
-  const navigate = useNavigate()
-
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const { login } = useAuth();
+  const navigate = useNavigate();
+  // console.log(`this is the url: ${import.meta.env.VITE_BACKEND_URL}/auth/login`);
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    setError("")
-    setLoading(true)
+    e.preventDefault();
+    setError("");
+    setLoading(true);
 
     try {
-      const response = await axios.post("http://localhost:5000/auth/login", {
-        email,
-        password,
-      })
+      const response = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/auth/login`,
+        {
+          email,
+          password,
+        }
+      );
 
-      login(response.data.token, response.data.user)
-      navigate("/treks")
+      login(response.data.token, response.data.user);
+      navigate("/treks");
     } catch (err) {
-      setError(err.response?.data?.error || "Login failed")
+      setError(err.response?.data?.error || "Login failed");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <div className="auth-container">
@@ -77,5 +80,5 @@ export default function Login() {
         </p>
       </div>
     </div>
-  )
+  );
 }
